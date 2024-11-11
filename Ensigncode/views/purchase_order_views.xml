@@ -1,0 +1,33 @@
+<odoo>
+    <record id="view_purchase_order_form_approval" model="ir.ui.view">
+        <field name="name">purchase.order.form.approval</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Add the computed fields as hidden fields to make them available for conditional visibility -->
+            <xpath expr="//sheet" position="inside">
+                <field name="show_button_confirm" invisible="1"/>
+                <field name="show_button_approve_reject" invisible="1"/>
+            </xpath>
+
+            <!-- Add Approve and Reject buttons visible only when state is 'draft' -->
+            <xpath expr="//header" position="inside">
+                <button name="action_approve_order" type="object" string="Approve" 
+                        class="btn-primary" 
+                        invisible="not show_button_approve_reject"/>
+                <button name="action_reject_order" type="object" string="Reject" 
+                        class="btn-danger" 
+                        invisible="not show_button_approve_reject"/>
+                
+                <!-- "Confirm" button is visible only when state is 'approved' -->
+                <button name="button_confirm" type="object" string="Confirm"
+                        invisible="not show_button_confirm"/>
+            </xpath>
+
+            <!-- Add Approved to the status bar -->
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="selection">[('draft', 'RFQ'), ('sent', 'RFQ Sent'), ('approved', 'Approved'), ('purchase', 'Purchase Order'), ('done', 'Locked'), ('cancel', 'Cancelled')]</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

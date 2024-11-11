@@ -1,0 +1,117 @@
+<odoo>
+    <data>
+        <!-- Inherit the existing report layout -->
+        <template id="custom_header_footer"
+            inherit_id="web.external_layout_standard">
+
+            <xpath expr="//div[1]" position="replace">
+
+                <div t-attf-class="header o_company_#{company.id}_layout"
+                    t-att-style="report_header_style">
+
+                    <div class="row">
+
+                        <div class="col-12">
+
+                            <div class="float-end">
+
+                                <img t-if="company.logo"
+                                    t-att-src="image_data_uri(company.logo)"
+                                    style="max-width:260px;max-height:89px;"
+                                    alt="Logo" />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-9 text-end" style="margin-top:22px;"
+                            t-field="company.report_header" name="moto" />
+
+                    </div>
+                    <div t-if="company.logo or company.report_header" class="row zero_min_height">
+
+                        <div class="col-12">
+
+                            <div style="border-bottom: 1px solid black;" />
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="float-left">
+
+                            <div class="details">
+
+                                <table class="table_partner" style="width:120%;">
+
+                                    <tr>
+
+                                        <td>
+                                            <b style="color:black;">CLIENT Details:</b>
+
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td>
+                                            <b>
+                                                <span style="color:black;"
+                                                    t-if="company" t-esc="o.partner_id.name" />
+                                            </b>
+                                            <br></br>
+
+                                            <t t-if="o.partner_id.street">
+                                                <span t-esc="o.partner_id.street" />
+                                                <br></br>
+
+                                            </t>
+                                            <t t-if="o.partner_id">
+                                                <span t-esc="o.partner_id.city" />
+                                                <br></br>
+
+                                            </t>
+
+                                        </td>
+
+                                    </tr>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </xpath>
+
+            <xpath expr="//div[hasclass('text-center')]" position="replace">
+
+                <center>
+
+                    <h5 style="color:black;">
+
+                        <b>
+                            <t t-esc="o.company_id.name" />
+                        </b>
+
+                    </h5>
+                    
+        <h6
+                        style="color:black;">Your company details</h6> Page: <span class="page" />/<span
+                        class="topage" />
+
+                </center>
+
+            </xpath>
+
+        </template>
+
+    </data>
+</odoo>
